@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//方法一，[ , ]
+//方法二，[ , )
 int search(int* nums, int numsSize, int target) {
     int head = 0;
     int tail = numsSize - 1;
