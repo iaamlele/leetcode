@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//左毕右毕区间
 int search(int* nums, int numsSize, int target) {
     int head = 0;
     int tail = numsSize - 1;
