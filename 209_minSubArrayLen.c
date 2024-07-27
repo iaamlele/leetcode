@@ -1,33 +1,20 @@
 #include <stdio.h>
+#include <limits.h>
+#define INT_MAX __INT_MAX__
 
 int minSubArrayLen(int target, int* nums, int numsSize) {
-    int min_len = 0;
-    
-    for(int i = 0; i < numsSize; i++) {
-        if(nums[i] >= target) {
-            return 1;
+    int i = 0;
+    int sum = 0;
+    int min_len = INT_MAX;
+    for(int j = 0; j < numsSize; j++) {
+        sum+=nums[j];
+        while(sum >= target) {
+            int subLen = j - i + 1;
+            min_len = min_len > subLen? subLen: min_len;
+            sum-=nums[i++];          
         }
-        int k = 0;
-        int res = nums[i];
-        int len = 1;
-        
-        for(int j = i + 1; j < numsSize; j++) {
-            res+=nums[j];
-            len++;
-            if(res >= target) {
-                printf("min_len:%d, len:%d\n", min_len, len);
-                if(min_len != 0) {
-                    min_len = (min_len < len) ? min_len:len;
-                }else {
-                    min_len = (min_len < len) ? len:min_len;
-                }
-                
-            }
-        }
-        
     }
-    
-    return min_len;
+    return min_len == INT_MAX? 0: min_len;
 }
 
 int main() {
