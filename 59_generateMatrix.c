@@ -27,26 +27,27 @@ int** generateMatrix(int n, int* returnSize, int** returnColumnSizes) {
     int end = n - 1;
     while(num <= n * n) {
         // 横右
-        for(int i = start; i <= end; i++) {
+        printf("num:%d\n", num);
+        for(int i = start; i < end; i++) {
             // 为二位数组赋值
             matrix[start][i] = num++;
             printf("hy,matrix[%d][%d], num:%d\n", start, i, num);
         }
 
         // 竖下
-        for(int i = start + 1; i <= end ; i++) {
+        for(int i = start; i < end ; i++) {
             matrix[i][end] = num++;
             printf("sx,matrix[%d][%d], num:%d\n", i, end, num);
         }
 
         // 横左
-        for(int i = end - 1; i >= start; i--) {
+        for(int i = end; i > start; i--) {
             matrix[end][i] = num++;
             printf("hz,matrix[%d][%d], num:%d\n", end, i, num);
         }
 
         // 竖上
-        for(int i = end - 1; i > start; i--) {
+        for(int i = end; i > start; i--) {
             matrix[i][start] = num++;
             printf("ss,matrix[%d][%d], num:%d\n", i, start, num);
         }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -12,26 +13,30 @@ struct ListNode {
     struct ListNode *next;
 };
 
-struct ListNode* removeElements(struct ListNode* head, int val) {
-    struct ListNode *current;
-    if(head != NULL) {
-        current = head;
-        if(current->val == val && head->next == NULL) {
-            free(head);
-            return head;
-        }
-        if(head->next->val == val) {
-            head = head->next;
-            current->next = current->next->next;
-            free(head);
-            head = current;
-        }else {
-            head = head->next;
-            current = current->next;
-        }
-    }else {
-        return head;
+void printfNode(struct ListNode* current) {
+    while(current != NULL) {
+        printf("%d ", current->val);
+        current = current->next;
     }
+}
+
+struct ListNode* removeElements(struct ListNode* head, int val) {
+    struct ListNode *tmp = head;
+    while(head && head->val == val) {
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+    struct ListNode *cur = head;
+    while(cur && (tmp = cur->next)) {
+        if(tmp->val == val) {
+            cur->next = tmp->next;
+            free(tmp);
+        }else {
+            cur = cur->next;
+        }
+    }
+    return head;
 }
 
 struct ListNode *createListNode(int val) {
@@ -50,25 +55,23 @@ void deleteListNode(struct ListNode* newlnode) {
     }
 }
 
-void printfNode(struct ListNode* current) {
-    while(current != NULL) {
-        printf("%d ", current->val);
-        current = current->next;
-    }
-}
-
-int main() {
-    struct ListNode *newlnode = createListNode(1);
-
+struct ListNode *addNode(struct ListNode* newlnode) {
     newlnode->next = createListNode(2);
     newlnode->next->next = createListNode(6);
     newlnode->next->next->next = createListNode(3);
     newlnode->next->next->next->next = createListNode(4);
     newlnode->next->next->next->next->next = createListNode(5);
     newlnode->next->next->next->next->next->next = createListNode(6);
+    return newlnode;
+}
 
-    struct ListNode *currentNode = removeElements(newlnode, 6);
+int main() {
+    struct ListNode *newlnode = createListNode(1);
+    newlnode = addNode(newlnode);    
+
+    struct ListNode *currentNode = removeElements(newlnode, 7);
     printfNode(currentNode);
+    deleteListNode(currentNode);
 
     return 0;
 }
