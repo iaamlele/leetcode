@@ -1,4 +1,3 @@
-// 浅拷贝
 
 const obj = {
     "lele": 22,

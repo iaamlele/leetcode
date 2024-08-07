@@ -1,3 +1,4 @@
+// 方法一:高阶函数
 const order = [
     {date: '4/12', user: '小明', addr: '北京', amount: 5, num: 1},
     {date: '4/13', user: '小明', addr: '北京', amount: 6, num: 2},
@@ -18,6 +19,7 @@ function findNode(newlist, order_para, para1) {
         }
     }
 
+
     // 问题3: forEach 是一个数组方法，它的回调函数没有办法影响外层函数的返回值。
     // newlist.forEach(item => {// typeof(item) === 'Object', Object使用.访问属性key
     //     // 问题2: 对象有两种访问值的方式:1.obj.key;2.obj[key]  区别在于:1.obj.key用于访问对象静态属性,属性名必须是有效标识符,并且是固定的；2.obj[key]用于动态访问对象属性,属性名通过变量来动态指定
@@ -27,8 +29,6 @@ function findNode(newlist, order_para, para1) {
     return null;
 }
 
-// 方法一:高阶函数
-// 方法二:hashtable
 function aggregation(order, para1, para2) {
     order.forEach(item => {
         const newlist_node = findNode(newlist, item, para1);
