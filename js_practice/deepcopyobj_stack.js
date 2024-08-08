@@ -24,7 +24,6 @@ function deepCopy(obj) {
             for(let i in v) { //这里不是很理解
                 stack.push({k: i, v: v[i], target: target[k]});
             }
-            stack.push();
         }else {
             target[k] = v;
         }
