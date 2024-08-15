@@ -5,7 +5,7 @@
 // 1.字符转数字: parseInt(str);
 // 2.数字转字符: number.tostring();
 var isHappy = function(n) {
-    let i = 50;
+    let i = 7;
     let str = n.toString();
     while(i--) {
         str = str.split("");

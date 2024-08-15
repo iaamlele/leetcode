@@ -8,9 +8,7 @@ function insituMove(list) {
             j++;
         }else {
             if(list[j] !== 0) {
-                let tmp = list[j];
-                list[j] = list[i];
-                list[i] = tmp;
+                [list[i], list[j]] = [list[j], list[i]];
                 i++;
                 j++;
             }else {

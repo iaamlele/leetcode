@@ -14,6 +14,7 @@ let carList = [
 function getOverview(carList) {
     const newlist = [];
     carList.forEach(item1 => {
+        // Array.prototype.indexOf(): 返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined。 const found = array1.find((element) => element > 10);
         const target = newlist.find(item2 => item1.type === item2.type && item1.status === item2.status);
         if(target) {
             target.total++;
