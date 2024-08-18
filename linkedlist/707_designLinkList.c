@@ -14,7 +14,7 @@ typedef struct LinkedList{
     struct myListNode *tail;
 } MyLinkedList;
 
-
+// 使用malloc的地方,都要判断是否申请成功(是否为null)
 MyLinkedList* myLinkedListCreate() {
     MyLinkedList *mylinklist = (MyLinkedList *)malloc(sizeof(MyLinkedList));
     if(mylinklist != NULL) {
@@ -79,10 +79,8 @@ void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
 }
 
 void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
-    MyListNode *current = (MyListNode *)malloc(sizeof(MyListNode));
-    current = obj->head;
-    printf("index:%d\n", index);
-    printf("current:%lld\n", (long long int)current);
+    //current不需要malloc
+    MyListNode *current = obj->head;
     if(index <= obj->count + 1) {
             
         if(index == 0) {

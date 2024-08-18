@@ -12,6 +12,7 @@ int getRightBorder(int *nums, int numsSize, int target) {
     int left = 0;
     int right = numsSize - 1;
     int rightBorder = -1;
+    // []
     while(left <= right) {
         int mid = (right + left) / 2;
         if(nums[mid] > target) {

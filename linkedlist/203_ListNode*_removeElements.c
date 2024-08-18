@@ -55,6 +55,7 @@ void deleteListNode(struct ListNode* newlnode) {
     }
 }
 
+// 可优化
 struct ListNode *addNode(struct ListNode* newlnode) {
     newlnode->next = createListNode(2);
     newlnode->next->next = createListNode(6);
