@@ -27,7 +27,6 @@ function reverse(arr, start, end) {
 
 function rightHandedString(inputs) {
     let [k, str] = inputs;
-    console.log(typeof(k));
     k = parseInt(k);
     const arr = Array.from(str);
     reverse(arr, 0, arr.length - 1);
