@@ -9,8 +9,22 @@ function TreeNode(val, left, right) {
 }
 
 var inorderTraversal = function(root) {
-    
-    
+    const result = [];
+    const stk = [];
+
+    let cur = root;
+    while(cur !== null || stk.length !== 0) {
+        if(cur !== null) {
+            stk.push(cur);
+            cur = cur.left;
+        }else {
+            cur = stk.pop();
+            result.push(cur.val);
+            cur = cur.right;
+        }
+    }
+
+    return result;
 }
 
 const root = new TreeNode(1);
