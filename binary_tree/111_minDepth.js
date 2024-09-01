@@ -16,22 +16,22 @@ function TreeNode(val, left, right) {
     this.right = (right === undefined ? null : right);
 }
 
-// 二叉树层序遍历的模板来解决
-var maxDepth = function(root) {
-    let result = 0;
-    if(!root) return result;
+var minDepth = function(root) {
+    let min = 0;
+    if(!root) return min;
     const que = [root];
 
     while(que.length) {
         let length = que.length;
-        while(length--) {
-            const node = que.shift(); 
+        min++;
+        for(let i = 0; i < length ; i++) {
+            const node = que.shift();
+            if(!node.left && !node.right) return min;
             node.left && que.push(node.left);
             node.right && que.push(node.right);
         }
-        result++;
+        
     }
-    return result;
 };
 
 const root = new TreeNode(3);
@@ -44,4 +44,4 @@ root.right = node3;
 node3.left = node4;
 node3.right = node5;
 
-console.log(maxDepth(root));
+console.log(minDepth(root));
