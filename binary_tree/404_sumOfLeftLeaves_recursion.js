@@ -18,24 +18,23 @@ function TreeNode(val, left, right) {
 
 // 左叶子是一个既位于父节点的左边又没有子节点的节点
 function recursion(node, res) {
-    console.log(node);
-    if(node === null) return res;
-    else if(node !== null && node.left === null && node.right === null) {
-        console.log("okk");
-        return res+=(node.val);
-        
-    }
-    console.log("OK",res);
-    if(node.left !== null) res = recursion(node.left, res);
-    if(node.right !== null) res = recursion(node.right.left, res);
-    console.log(res);
+    // 终止条件确定错误,这里是return 0,不是res；else if的终止条件也写错了,把逻辑写进来了. 总体来说逻辑很混乱
+    if(node === null) return 0;
+    else if(node.left === null && node.right === null) return 0;
+
+    let leftValue = recursion(node.left);
+    if(node.left && !node.left.left && !node.left.right) leftValue = root.left.val;
+    let rightValue = recursion(node.right);
+
+    let sum = leftValue + rightValue;
     // 如何正确返回res
-    return res;
+    return sum;
 }
 
-// 递归法-中序遍历遍历
+// 递归法-后序遍历, 从刚开始遍历顺序选错
 var sumOfLeftLeaves = function(root) {
     if(!root) return root;
+    if(root.left === null && root.right === null) return 0;
     return recursion(root, res = 0);
 };
 
