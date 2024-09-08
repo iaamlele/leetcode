@@ -17,21 +17,21 @@ function TreeNode(val, left, right) {
     this.right = (right = undefined ? null : right);
 }
 
-// 迭代法,前序遍历
-// 注意:当没有找到匹配项的时候,题目给的是返回[],实际上是返回null
+// 方法二: 递归法- 前序遍历
 var searchBST = function(root, val) {
-    if(!root) return [];
-    const que = [root];
+    const recursion = function(root, val) {
+        // 不会确定终止条件..
+        if(root === null || root.val === val) return root;
 
-    while(que.length) {
-        const node = que.shift();
-        if(node.val === val) return node;
-
-        node.left && que.push(node.left);
-        node.right && que.push(node.right);
+        if(val > root.val) {
+            return recursion(root.right, val);
+        }else if(val < root.val) {
+            return recursion(root.left, val);
+        }
     }
 
-    return null;
+    if(!root) return null;
+    return recursion(root, val);
 };
 
 const root = new TreeNode(4);

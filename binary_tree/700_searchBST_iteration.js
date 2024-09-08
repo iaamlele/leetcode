@@ -17,20 +17,15 @@ function TreeNode(val, left, right) {
     this.right = (right = undefined ? null : right);
 }
 
-// 迭代法,前序遍历
-// 注意:当没有找到匹配项的时候,题目给的是返回[],实际上是返回null
+// 迭代法,前序遍历-使用二叉搜索树特征
 var searchBST = function(root, val) {
-    if(!root) return [];
-    const que = [root];
-
-    while(que.length) {
-        const node = que.shift();
-        if(node.val === val) return node;
-
-        node.left && que.push(node.left);
-        node.right && que.push(node.right);
+    while(root !== null) {
+        console.log(root, root.val);
+        if(root.val === val) return root;
+        if(root.val > val) root = root.left;
+        // 这里要用else if,细节, 不能直接用if,防止root是null后再次判断!
+        else if(root.val < val) root = root.right;
     }
-
     return null;
 };
 
