@@ -17,16 +17,45 @@ function TreeNode(val, left, right) {
 }
 
 // 迭代法-中序遍历 + 在栈上求最大众数
+// 迭代法的中序遍历不熟
 var findMode = function(root) {
     let res = [];
-    let stk = [root];
+    let stk = [];
+    let cur = root;
+    let pre = null;
+    let count = 0;
+    let maxCount = 1;
+    while(cur !== null || stk.length) {
+        if(cur !== null) {
+            stk.push(cur);
+            cur = cur.left;
+        }else {
+            cur = stk.pop();
 
-    while(stk.length) {
-        let length = stk.length;
-        for(let i = 0; i < length; i++) {
-            if()
+            if(pre === null) { // 第一个节点
+                count = 1;
+            }else if(pre.val === cur.val) {
+                count++;
+            }else {
+                count = 1;
+            }
+            pre = cur;
+
+            if(count === maxCount) {
+                res.push(cur.val);
+            }
+
+            if(count > maxCount) {
+                maxCount = count;
+                res = [];
+                res.push(cur.val);
+            }
+
+            cur = cur.right;
         }
+        
     }
+    return res;
 };
 
 const root = new TreeNode(1);
