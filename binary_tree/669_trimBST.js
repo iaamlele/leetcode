@@ -18,9 +18,23 @@ function TreeNode(val, left, right) {
     this.right = (right === undefined ? null : right);
 }
 
-
+// 方法一: 递归法,抄的,思路绕, 对递归没有深刻的理解，困难
 var trimBST = function(root, low, high) {
+    if(root === null) return root;
 
+    if(root.val < low) {
+        const right = trimBST(root.right, low, high);
+        return right;
+    }
+
+    if(root.val > high) {
+        const left = trimBST(root.left, low, high);
+        return left;
+    }
+
+    root.left = trimBST(root.left, low, high);
+    root.right = trimBST(root.right, low, high);
+    return root;
 };
 
 const root = new TreeNode(1);
