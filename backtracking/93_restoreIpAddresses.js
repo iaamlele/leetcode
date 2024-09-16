@@ -4,27 +4,24 @@
  */
 var restoreIpAddresses = function(s) {
     const result = [];
-    let pointNum;
-    let len = s.length;
-    let ip_node = 0;
 
-    const backtracking = function(startIndex) {
+    const backtracking = function(s, startIndex, pointNum) {
         if(pointNum === 3) {
-            if(isValid(s, startIndex, len - 1)) {
+            if(isValid(s, startIndex, s.length - 1)) {
+                console.log(s);
                 result.push(s);
             }
-            return;
+            return; 
         }
-
-        for(let i = startIndex; i < len; i++) {
+        
+        for(let i = startIndex; i < s.length; i++) {
             if(isValid(s, startIndex, i)) {
-
-            }
-            ip_node = s.slice(startIndex, i);
-            if(ip_node[0] === '0' || (ip_node - 0) < 0 || (ip_node - 0) > 255) continue;
-            node.push(ip_node);
-            backtracking(i + 1);
-            node.pop();
+                s = s.slice(0, i) + '.' + s.slice(i);
+                pointNum++;
+                backtracking(s, i + 2, pointNum);
+                pointNum--;
+                s = s.slice(0, i) + s.slice(i + 1);
+            }else break;
         }
     }
 
@@ -32,15 +29,21 @@ var restoreIpAddresses = function(s) {
         if(startIndex > endIndex) return false;
         if(s[startIndex] === '0' && startIndex !== endIndex) return false;
         let num = 0;
-        s.foreach(item => {
-            if(item > '9' || item < '0') return false;
-            num = num * 10 + (item - '0');
-            if(num > 255) return false;
-        })
+        for (let i = startIndex; i <= endIndex; i++) {
+            if (s[i] > '9' || s[i] < '0') { // 遇到非数字字符不合法
+                return false;
+            }
+            num = num * 10 + (s[i] - '0');
+            console.log(num);
+            if (num > 255) { // 如果大于255了不合法
+                return false;
+            }
+        }
         return true;
     }
 
-    backtracking(0);
+    if(s.length < 4 || s.length > 12) return result;
+    backtracking(s, 0, 0);
     return result;
 };
 
