@@ -3,26 +3,31 @@
  * @return {number}
  */
 
-// 方法一: 双指针 按列计算
+// 方法一: 双指针 按列计算 改进
 var trap = function(height) {
-    let sum = 0;
-    for(let i = 0; i < height.length; i++) {
-        if(i === 0 || i === height.length - 1) continue;
+    if(height.length <= 2) return 0;
+    const len = height.length;
+    const maxLeft = [];
+    const maxRight = [];
 
-        // 分别寻找左右两边最高的柱子
-        let rHeight = height[i];
-        let lHeight = height[i];
-        for(let j = i + 1; j < height.length; j++) {
-            if(height[j] > rHeight) rHeight = height[j];
-        }
-
-        for(let j = 0; j < i; j++) {
-            if(height[j] > lHeight) lHeight = height[j];
-        }
-
-        let h = Math.min(lHeight, rHeight) - height[i];
-        if(h > 0) sum+=h;
+    // 记录每个柱子左边最大高度
+    maxLeft[0] = [height[0]];
+    for(let i = 1; i < len; i++) {
+        maxLeft[i] = Math.max(height[i], maxLeft[i - 1]);
     }
+
+    // 记录每个柱子右边最大高度
+    maxRight[len - 1] = height[len - 1];
+    for(let i = len - 2; i >= 0; i--) {
+        maxRight[i] = Math.max(height[i], maxRight[i + 1]);
+    }
+
+    let sum = 0;
+    for(let i = 0; i < len; i++) {
+        let count = Math.min(maxLeft[i], maxRight[i]) - height[i];
+        if(count > 0) sum += count;
+    }
+
     return sum;
 };
 
