@@ -37,7 +37,7 @@ const dfs = (graph, visited, x, y) => {
         dfs(graph, visited, nextx, nexty)
       }
     }
-  }
+}
 
 (async function () {
 

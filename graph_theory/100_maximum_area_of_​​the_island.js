@@ -15,11 +15,12 @@ let dir = [[0, 1], [1, 0], [0, -1], [-1, 0]];
 const initGraph = async() => {
     let line = await readline();
     [N, M] = line.split(' ').map(i => parseInt(i));
+    console.log(N, M);
     graph = new Array(N).fill(0).map(() => new Array(M).fill(0));
     visited = new Array(N).fill(false).map(() => new Array(M).fill(false));
 
     for(let i = 0; i < N ; i++) {
-        line = await readline();
+        let line = await readline();
         line = line.split(' ').map(i => parseInt(i));
         for(let j = 0; j < M ; j++) {
             graph[i][j] = line[j];

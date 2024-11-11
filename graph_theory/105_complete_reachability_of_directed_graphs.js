@@ -38,10 +38,10 @@ const dfs = (grid, visited, x, y) => {
     await init();
 
     dfs(grid, visited, 1, 2);
-
+    console.log(visited);
     for(let i = 1; i <= N; i++) {
         if(!visited[i]) {
-            console.log(0);
+            console.log(-1);
             return;
         }
     }
