@@ -35,26 +35,36 @@ function MyPromise(executor) {
         }
     }
 
-    executor(resolve, reject);
+    // 9.增加错误捕获
+    try {
+        executor(resolve, reject);
+    } catch(error) {
+        reject(error);
+    }
+    
 }
 
 // 2.then方法
 MyPromise.prototype.then = function(successCallback, failureCallback) { //这里应该是普通函数，而不是箭头函数
     let self = this;
-    if(self.mystatus === 'pending') {
-        self.onSuccessCallbacks.push(() => {
-            successCallback(self.success)
-        });
-        self.onErrorCallbacks.push(() => {
-            failureCallback(self.error)
-        });
-    }
-    if(self.mystatus === 'resolved') {
-        successCallback(self.seccess)
-    }
-    if(self.mystatus === 'reject') {
-        failureCallback(self.error);
-    }
+
+    let promiseAgain = new MyPromise((resolve, reject) => {
+        if(self.mystatus === 'pending') {
+            self.onSuccessCallbacks.push(() => {
+                successCallback(self.success)
+            });
+            self.onErrorCallbacks.push(() => {
+                failureCallback(self.error)
+            });
+        }
+        if(self.mystatus === 'resolved') {
+            successCallback(self.seccess)
+        }
+        if(self.mystatus === 'reject') {
+            failureCallback(self.error);
+        }
+    })
+    
 }
 
 // 测试用例1: 同步
@@ -70,16 +80,39 @@ MyPromise.prototype.then = function(successCallback, failureCallback) { //这里
 // })
 
 // 测试用例2: 异步
+// let promise = new MyPromise((resolve, reject) => {
+//     console.log('start');
+//     setTimeout(function() {
+//         reject('error data')
+//     }, 1000);
+//     console.log('end');
+// })
+
+// promise.then(res => {
+//     console.log('res', res);
+// }, error => {
+//     console.log('err', error);
+// });
+
+// 测试用例3: 让Promise抛一个错误
+// let promise = new MyPromise((resolve, reject) => {
+//     throw new Error('一个错误');
+// });
+// promise.then(res => {
+//     console.log('res', res);
+// }, error => {
+//     console.log('error', error);
+// });
+
+// 测试用例4: 链式调用－－返回普通的值
 let promise = new MyPromise((resolve, reject) => {
-    console.log('start');
-    setTimeout(function() {
-        resolve('success data')
-    }, 1000);
-    console.log('end');
-})
+    resolve('success');
+});
 
 promise.then(res => {
-    console.log('res', res);
-}, error => {
-    console.log('err', error);
+    console.log('res:', res);
+    return 'aaa';
+}).then(res1 => {
+    console.log('res1:', res1);
+    return 'bbb';
 });
