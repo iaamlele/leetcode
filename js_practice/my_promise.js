@@ -45,26 +45,59 @@ function MyPromise(executor) {
 }
 
 // 2.then方法
-MyPromise.prototype.then = function(successCallback, failureCallback) { //这里应该是普通函数，而不是箭头函数
+MyPromise.prototype.then = function(onResovled, onRejected) { //这里应该是普通函数，而不是箭头函数
     let self = this;
 
     let promiseAgain = new MyPromise((resolve, reject) => {
         if(self.mystatus === 'pending') {
             self.onSuccessCallbacks.push(() => {
-                successCallback(self.success)
+                let x = onResovled(self.success);
+                resolvePromise(promiseAgain, x, resolve, reject);
+                // onResovled(self.success)
             });
             self.onErrorCallbacks.push(() => {
-                failureCallback(self.error)
+                let x = onRejected(self.error);
+                resolvePromise(promiseAgain, x, resolve, reject);
+                // onRejected(self.error)
             });
         }
         if(self.mystatus === 'resolved') {
-            successCallback(self.seccess)
+            let x = onResovled(self.success);
+            resolvePromise(promiseAgain, x, resolve, reject);
+            // onResovled(self.seccess)
         }
         if(self.mystatus === 'reject') {
-            failureCallback(self.error);
+            let x = onRejected(self.error);
+            resolvePromise(promiseAgain, x, resolve, reject);
+            // onRejected(self.error);
         }
     })
-    
+    return promiseAgain;
+}
+
+function resolvePromise(promiseAgain, x, resolve,  reject) {
+    // 如果x为本身，则结束，防止进入无限回调
+    if(promiseAgain === x) { 
+        return reject(new TypeError('循环调用'));
+    }
+    if(x !== null && (typeof x === 'object' || typeof x === 'function')) {
+        try {
+            let then = x.then;
+            if(typeof then === 'function') {
+                then.call(x, (y) => {
+                    resolvePromise(promiseAgain, y, resolve, reject);
+                }, (e) => {
+                    reject(e);
+                });
+            } else {
+                resolve(x);
+            }
+        } catch (error) {
+            reject(error);
+        }
+    } else { // x为普通值
+        reject(x);
+    }
 }
 
 // 测试用例1: 同步
