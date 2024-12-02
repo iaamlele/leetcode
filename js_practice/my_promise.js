@@ -20,6 +20,7 @@ function MyPromise(executor) {
             self.success = success;
             // ８.异步：存放成功和失败的回调
             self.onSuccessCallbacks.forEach(element => {
+                // 这里每次只会调用一个函数
                 element();
             })
         }
@@ -81,6 +82,7 @@ function resolvePromise(promiseAgain, x, resolve,  reject) {
         return reject(new TypeError('循环调用'));
     }
     if(x !== null && (typeof x === 'object' || typeof x === 'function')) {
+        console.log('OK1');
         try {
             let then = x.then;
             if(typeof then === 'function') {
@@ -96,7 +98,7 @@ function resolvePromise(promiseAgain, x, resolve,  reject) {
             reject(error);
         }
     } else { // x为普通值
-        reject(x);
+        resolve(x);
     }
 }
 
@@ -138,14 +140,32 @@ function resolvePromise(promiseAgain, x, resolve,  reject) {
 // });
 
 // 测试用例4: 链式调用－－返回普通的值
-let promise = new MyPromise((resolve, reject) => {
-    resolve('success');
-});
+// let promise = new MyPromise((resolve, reject) => {
+//     resolve('success');
+// });
 
-promise.then(res => {
-    console.log('res:', res);
-    return 'aaa';
-}).then(res1 => {
-    console.log('res1:', res1);
-    return 'bbb';
+// promise.then(res => {
+//     console.log('res:', res);
+//     return 'aaa';
+// }).then(res1 => {
+//     console.log('res1:', res1);
+//     return 'bbb';
+// });
+
+// 测试用例5: 链式调用
+let promise = new MyPromise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('成功的回调');
+    }, 1000)
+});
+promise.then((res) => {
+    console.log('res: ', res);
+    return 'aaaa';
+}, (error) => {
+    console.log('error: ', error);
+}).then((res2) => {
+    console.log('res2: ', res2);
+    return 'bbbb';
+}).then((res3) => {
+    console.log('res3 ', res3);
 });
