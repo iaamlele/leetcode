@@ -5,17 +5,15 @@ function TreeNode(val, left, right) {
 }
 
 var maxDepth = function(root) {
-    const recursion = function(node, max) {
-        if(!node) return max;
+    const recursion = function(node) {
+        if(!node) return 0;
         
-        const left_maxDepth = recursion(node.left, max);
-        const right_maxDepth = recursion(node.right, max);
-        max++;
-        console.log(node, max);
+        const left_maxDepth = recursion(node.left);
+        const right_maxDepth = recursion(node.right);
+        let depth = Math.max(left_maxDepth, right_maxDepth) + 1;
+        return depth;
     }
-    let max = 0;
-    recursion(root, max);
-    return max;
+    return recursion(root);
 }
 
 const root = new TreeNode(3);
