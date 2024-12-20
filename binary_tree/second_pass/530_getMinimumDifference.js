@@ -20,7 +20,6 @@ const getMinimumDifference = function(root) {
         const min_value = list[i + 1] - list [i];
         min = min > min_value ? min_value : min;
     }
-    console.log(list);
     return min;
 }
 

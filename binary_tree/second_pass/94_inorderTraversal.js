@@ -16,6 +16,7 @@ var inorderTraversal = function(root) {
     recursion(root, list);
     return list;
 }
+
 const root = new TreeNode(1);
 const node2 = new TreeNode(2);
 const node3 = new TreeNode(3);
