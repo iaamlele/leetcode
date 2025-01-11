@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script> 
+            // 创建一个XHR实例
+            var xhr = new XMLHttpRequest();
+            // 初始化一个HTTP GET请求, url是请求的地址, 第三个参数是是否异步
+            xhr.open("GET", "https://api.github.com/orgs/lemoncode/members", true);
+            // 处理服务器相应，会在 XMLHttpRequest 的readyState属性发生改变时触发 readystatechange 事件的时候被调用
+            xhr.onreadystatechange = function() {
+                // readyState返回一个 XMLHttpRequest 代理当前所处的状态, 当readyState为4时，表示请求已完成
+                if(xhr.readyState === 4 && xhr.status === 200) {
+                    // 在一个请求被发送后，从服务器端返回文本
+                    const text = xhr.responseText;
+                    // 将文本转换为JSON对象
+                    const json = JSON.parse(text);
+                    console.log(json);
+                    const avatar_url_list = [];
+                    for(let i = 0; i < json.length; i++) {
+                        avatar_url_list.push(json[i].avatar_url);
+                    }
+                    console.log(avatar_url_list);
+                }
+            }
+            xhr.send();
+        </script>
+    </body>
+</html>
