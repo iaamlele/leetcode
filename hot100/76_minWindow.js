@@ -1,10 +1,10 @@
 function isCovered(cntS, cntT) {
-    for(let i = 'A'.charCodeAt(0); i < 'Z'.charCodeAt(0); i++) {
+    for(let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
         if(cntS[i] < cntT[i]) {
             return false;
         }
     }
-    for(let i = 'a'.charCodeAt(0); i < 'z'.charCodeAt(0); i++) {
+    for(let i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++) {
         if(cntS[i] < cntT[i]) {
             return false;
         }
